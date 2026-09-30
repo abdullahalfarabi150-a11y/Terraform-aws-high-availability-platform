@@ -26,28 +26,6 @@ jobs:
         with:
           terraform_version: "1.16.3"
 
-      - name: Direct AWS STS OIDC Test
-        shell: bash
-        run: |
-          echo "Requesting OIDC token from GitHub..."
-
-          RESPONSE=$(curl -sS \
-            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com")
-
-          TOKEN=$(echo "$RESPONSE" | python3 -c 'import sys,json; print(json.load(sys.stdin)["value"])')
-
-          echo "OIDC token received successfully."
-          echo "Testing token directly with AWS STS..."
-
-          aws sts assume-role-with-web-identity \
-            --role-arn arn:aws:iam::641332413499:role/GitHubActions-Terraform-Role \
-            --role-session-name GitHubOIDCTest \
-            --web-identity-token "$TOKEN" \
-            --duration-seconds 900 \
-            --query 'AssumedRoleUser.Arn' \
-            --output text
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
