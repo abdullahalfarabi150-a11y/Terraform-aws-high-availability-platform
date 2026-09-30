@@ -26,45 +26,27 @@ jobs:
         with:
           terraform_version: "1.16.3"
 
-      - name: Inspect OIDC Claims
+      - name: Direct AWS STS OIDC Test
         shell: bash
         run: |
+          echo "Requesting OIDC token from GitHub..."
+
           RESPONSE=$(curl -sS \
             -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
             "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com")
 
           TOKEN=$(echo "$RESPONSE" | python3 -c 'import sys,json; print(json.load(sys.stdin)["value"])')
-          export TOKEN
 
-          python3 - <<'PY'
-          import os
-          import json
-          import base64
+          echo "OIDC token received successfully."
+          echo "Testing token directly with AWS STS..."
 
-          header = os.environ["TOKEN"].split(".")[0]
-          header += "=" * (-len(header) % 4)
-          header_data = json.loads(base64.urlsafe_b64decode(header))
-
-          print(f"alg: {header_data.get('alg')}")
-          print(f"kid: {header_data.get('kid')}")
-          print()
-
-          payload = os.environ["TOKEN"].split(".")[1]
-          payload += "=" * (-len(payload) % 4)
-          claims = json.loads(base64.urlsafe_b64decode(payload))
-
-          for key in [
-              "iss",
-              "aud",
-              "sub",
-              "repository",
-              "repository_id",
-              "repository_owner",
-              "repository_owner_id",
-              "ref"
-          ]:
-              print(f"{key}: {claims.get(key)}")
-          PY
+          aws sts assume-role-with-web-identity \
+            --role-arn arn:aws:iam::641332413499:role/GitHubActions-Terraform-Role \
+            --role-session-name GitHubOIDCTest \
+            --web-identity-token "$TOKEN" \
+            --duration-seconds 900 \
+            --query 'AssumedRoleUser.Arn' \
+            --output text
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6.3.0
