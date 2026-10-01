@@ -46,3 +46,9 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -input=false
+
+  deploy:
+    name: Terraform Deploy
+    needs: terraform
+    runs-on: ubuntu-latest
+    environment: Production
