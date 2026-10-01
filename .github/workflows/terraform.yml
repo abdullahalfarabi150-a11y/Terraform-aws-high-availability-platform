@@ -52,3 +52,7 @@ jobs:
     needs: terraform
     runs-on: ubuntu-latest
     environment: Production
+
+    steps:
+      - name: Production approval test
+        run: echo "Production deployment approved"
