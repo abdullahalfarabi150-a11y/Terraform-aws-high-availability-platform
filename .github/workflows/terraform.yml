@@ -12,6 +12,9 @@ permissions:
   contents: read
   id-token: write
 
+env:
+  TF_VAR_alert_email: ${{ secrets.TF_VAR_ALERT_EMAIL }}
+
 jobs:
   terraform:
     name: Terraform Checks
