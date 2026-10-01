@@ -54,5 +54,19 @@ jobs:
     environment: Production
 
     steps:
-      - name: Production approval test
-        run: echo "Production deployment approved"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.16.3"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: arn:aws:iam::641332413499:role/GitHubActions-Terraform-Role
+          aws-region: ap-southeast-2
+
+      - name: Terraform Init
+        run: terraform init
