@@ -249,7 +249,7 @@ resource "aws_autoscaling_group" "web" {
   name = "project2-web-asg"
 
   min_size         = 2
-  desired_capacity = 2
+  desired_capacity = 3
   max_size         = 4
 
   vpc_zone_identifier = [
