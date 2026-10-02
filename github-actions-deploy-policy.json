@@ -1,0 +1,69 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "ManageEC2AndNetworking",
+        "Effect": "Allow",
+        "Action": [
+          "ec2:*"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Sid": "ManageLoadBalancing",
+        "Effect": "Allow",
+        "Action": [
+          "elasticloadbalancing:*"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Sid": "ManageAutoScaling",
+        "Effect": "Allow",
+        "Action": [
+          "autoscaling:*"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Sid": "ManageCloudWatch",
+        "Effect": "Allow",
+        "Action": [
+          "cloudwatch:*"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Sid": "ManageSNS",
+        "Effect": "Allow",
+        "Action": [
+          "sns:*"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Sid": "ManageProjectIAM",
+        "Effect": "Allow",
+        "Action": [
+          "iam:CreateRole",
+          "iam:DeleteRole",
+          "iam:GetRole",
+          "iam:UpdateAssumeRolePolicy",
+          "iam:TagRole",
+          "iam:UntagRole",
+          "iam:AttachRolePolicy",
+          "iam:DetachRolePolicy",
+          "iam:ListAttachedRolePolicies",
+          "iam:CreateInstanceProfile",
+          "iam:DeleteInstanceProfile",
+          "iam:GetInstanceProfile",
+          "iam:AddRoleToInstanceProfile",
+          "iam:RemoveRoleFromInstanceProfile",
+          "iam:TagInstanceProfile",
+          "iam:UntagInstanceProfile",
+          "iam:PassRole"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
