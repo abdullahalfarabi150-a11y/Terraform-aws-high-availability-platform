@@ -678,30 +678,18 @@ Through this project, I gained hands-on experience with:
 
 ## Project Summary
 
-This project demonstrates an end-to-end AWS infrastructure deployment workflow:
-
-```text
-Infrastructure Design
-        ↓
-Terraform Infrastructure as Code
-        ↓
-GitHub Version Control
-        ↓
-GitHub Actions CI/CD
-        ↓
-OIDC + AWS IAM
-        ↓
-Terraform Deployment
-        ↓
-AWS Infrastructure
-        ↓
-ALB + EC2 + Auto Scaling
-        ↓
-CloudWatch Monitoring
-        ↓
-SNS Alerting
-        ↓
-Failure & Scaling Testing
-```
-
-The result is a **highly available, scalable, monitored, and automatically deployed AWS web platform managed through Infrastructure as Code**.
+- Built a highly available AWS web infrastructure using Terraform Infrastructure as Code (IaC).
+- Designed a custom VPC with two public subnets across two Availability Zones for high availability.
+- Implemented an Application Load Balancer (ALB) to distribute HTTP traffic across healthy EC2 instances.
+- Configured Target Group health checks to ensure traffic is routed only to healthy application instances.
+- Used a Launch Template and Auto Scaling Group to maintain EC2 capacity and automatically replace unhealthy instances.
+- Implemented CPU-based Target Tracking Auto Scaling with a 70% utilization target for automatic scale-out and scale-in.
+- Configured Amazon CloudWatch for infrastructure monitoring and CPU utilization tracking.
+- Integrated CloudWatch Alarms with Amazon SNS to provide email notifications for infrastructure events.
+- Used an Amazon S3 backend to remotely store and manage Terraform state for consistent infrastructure deployments.
+- Built a CI/CD pipeline with GitHub Actions to automatically validate, plan, and deploy Terraform infrastructure changes.
+- Implemented GitHub OIDC authentication with AWS IAM to provide secure temporary AWS credentials without storing long-term access keys.
+- Applied security controls including ALB-to-EC2 security group restrictions, IMDSv2, IAM roles, and AWS Systems Manager access.
+- Performed controlled failure and recovery testing to validate ALB health checks, Auto Scaling self-healing, and infrastructure resilience.
+- Performed CPU load testing to verify automatic scale-out and scale-in behaviour under changing workloads.
+- Used Git and GitHub for version control, infrastructure change tracking, CI/CD automation, and project documentation.
