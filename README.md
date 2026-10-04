@@ -98,7 +98,7 @@ Terraform defines the desired AWS infrastructure.
 
 After changes are pushed to GitHub, **GitHub Actions** runs the CI/CD workflow. GitHub Actions uses **OIDC** to authenticate with AWS and assume an IAM role.
 
-Terraform then runs `plan` and `apply` to create or update the AWS infrastructure.
+Terraform then runs plan and apply to create or update the AWS infrastructure.
 
 ---
 
