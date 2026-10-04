@@ -693,3 +693,18 @@ Through this project, I gained hands-on experience with:
 - Performed controlled failure and recovery testing to validate ALB health checks, Auto Scaling self-healing, and infrastructure resilience.
 - Performed CPU load testing to verify automatic scale-out and scale-in behaviour under changing workloads.
 - Used Git and GitHub for version control, infrastructure change tracking, CI/CD automation, and project documentation.
+
+---
+
+## Future Improvements
+
+- Move EC2 instances to private subnets to improve application security and reduce direct internet exposure.
+- Add a NAT Gateway to provide controlled outbound internet access for EC2 instances in private subnets.
+- Configure HTTPS using AWS Certificate Manager (ACM) and an ALB HTTPS listener on port 443.
+- Integrate Amazon Route 53 for custom domain and DNS management.
+- Add AWS WAF to protect the web application from common web attacks and malicious traffic.
+- Improve monitoring by creating CloudWatch dashboards, additional alarms, and centralized application logs.
+- Add automated security scanning to the GitHub Actions CI/CD pipeline using tools such as Checkov or Trivy.
+- Create separate development, staging, and production environments using reusable Terraform modules.
+- Implement stronger production deployment controls, such as GitHub Environment protection and manual approval before production changes.
+- Integrate Amazon Bedrock to introduce Generative AI capabilities, such as an AI-powered assistant, application support features, or intelligent infrastructure-related interactions.
