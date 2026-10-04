@@ -131,100 +131,311 @@ Terraform then runs plan and apply to create or update the AWS infrastructure.
 
 ## 5. AWS Infrastructure
 
+The AWS infrastructure was designed to provide a highly available and scalable environment for hosting the web application. The environment includes a custom VPC, two public subnets across separate Availability Zones, internet connectivity, an Application Load Balancer, a Target Group, EC2 web servers, and an Auto Scaling Launch Template.
+
 ### VPC
 
-A custom VPC provides the network boundary for the infrastructure.
+A custom Amazon Virtual Private Cloud (VPC) was created to provide an isolated network environment for the project.
 
 ```text
 VPC CIDR: 10.0.0.0/16
 ```
 
+The `10.0.0.0/16` CIDR block defines the private IP address range available within the VPC. Smaller subnet networks were created from this address space to organize the infrastructure across multiple Availability Zones.
+
+The VPC acts as the main network boundary that contains the project's networking and compute resources, including:
+
+- Public Subnets
+- Route Table
+- Internet Gateway
+- Application Load Balancer
+- EC2 instances
+- Security Groups
+
+The VPC was created and managed through Terraform rather than being manually configured in the AWS Console.
+
+![VPC Resource Map](screenshots/vpc-resource-map.png)
+
+The VPC resource map shows the custom VPC and the relationship between the two public subnets, public route table, and Internet Gateway.
+
+---
+
 ### Public Subnets
 
-Two public subnets are deployed across two different Availability Zones:
+Two public subnets were created inside the VPC and distributed across two different Availability Zones.
 
 ```text
 Public Subnet 1
-10.0.1.0/24
-Availability Zone A
+CIDR: 10.0.1.0/24
+Availability Zone: ap-southeast-2a
 
 Public Subnet 2
-10.0.2.0/24
-Availability Zone B
+CIDR: 10.0.2.0/24
+Availability Zone: ap-southeast-2b
 ```
 
-Using two Availability Zones improves availability by reducing dependency on a single AZ.
+Both subnet CIDR ranges are smaller networks taken from the main `10.0.0.0/16` VPC address space.
+
+The two subnets were intentionally placed in separate Availability Zones to support high availability. This allows the infrastructure to run EC2 instances across different AWS data-center locations instead of depending on a single Availability Zone.
+
+The Application Load Balancer also spans both public subnets, allowing it to receive traffic across the multi-AZ environment.
+
+The Auto Scaling Group uses both subnets when launching EC2 instances, allowing instances to be distributed across the two Availability Zones.
+
+This design helps reduce the impact of an Availability Zone failure because application capacity can remain available in another AZ.
+
+---
 
 ### Internet Gateway
 
-An Internet Gateway is attached to the VPC to provide connectivity between the VPC and the internet.
+An Internet Gateway was created and attached to the custom VPC.
+
+The Internet Gateway provides a connection point between the VPC and the public internet.
+
+```text
+Internet
+    ↓
+Internet Gateway
+    ↓
+VPC
+```
+
+Attaching an Internet Gateway alone does not automatically make a subnet public. A route to the Internet Gateway must also exist in the route table associated with the subnet.
+
+For this project, the public route table contains a default route that directs internet-bound traffic to the Internet Gateway.
+
+---
 
 ### Public Route Table
 
-The public route table contains:
+A dedicated public route table was created to control how network traffic from the public subnets is routed.
+
+The route table contains the following routes:
 
 ```text
-10.0.0.0/16 → local
+Destination        Target
 
-0.0.0.0/0 → Internet Gateway
+10.0.0.0/16   →    local
+0.0.0.0/0     →    Internet Gateway
 ```
 
-The route table is associated with both public subnets.
+The `10.0.0.0/16 → local` route is automatically used for communication between resources inside the VPC.
+
+The `0.0.0.0/0 → Internet Gateway` route means that traffic destined for addresses outside the VPC can be routed through the Internet Gateway.
+
+Both public subnets were explicitly associated with this public route table:
+
+```text
+Public Subnet 1 ──┐
+                  ├── Public Route Table ── Internet Gateway
+Public Subnet 2 ──┘
+```
+
+This combination of the Internet Gateway, public route table, and subnet associations provides the networking path required for the public-facing components of the architecture.
+
+![Public Route Table](screenshots/public-route-table.png)
+
+The public route table contains the local VPC route and the default `0.0.0.0/0` route through the Internet Gateway.
+
+#### Subnet Associations
+
+![Subnet Route Associations](screenshots/subnet-route-associations.png)
+
+Both public subnets are explicitly associated with the same public route table, ensuring that they use the configured route to the Internet Gateway.
+
+---
 
 ### Application Load Balancer
 
-An internet-facing **Application Load Balancer** spans both public subnets.
+An internet-facing Application Load Balancer (ALB) was deployed across both public subnets.
 
-The ALB listens for HTTP traffic on:
+The ALB acts as the public entry point for the web application.
+
+It listens for incoming HTTP requests using:
 
 ```text
 Protocol: HTTP
 Port: 80
 ```
 
-Incoming requests are forwarded to the Target Group.
+The basic request flow is:
+
+```text
+User
+ ↓
+Internet
+ ↓
+Application Load Balancer
+ ↓
+Target Group
+ ↓
+Healthy EC2 Instance
+```
+
+When a user accesses the ALB DNS name, the request reaches the Application Load Balancer. The ALB listener on port `80` evaluates the request and forwards it to the configured Target Group.
+
+The ALB does not simply send traffic to any EC2 instance. It forwards application traffic to instances that are registered with the Target Group and considered healthy.
+
+Because the ALB spans both Availability Zones, it can distribute incoming requests across healthy application instances running in the multi-AZ environment.
+
+![Application Load Balancer](screenshots/alb-configuration.png)
+
+The Application Load Balancer is internet-facing, spans both Availability Zones, and uses an HTTP listener on port 80 to forward requests to the web Target Group.
+
+---
 
 ### Target Group
 
-The Target Group contains the EC2 instances used by the application.
+A Target Group was created to connect the Application Load Balancer with the EC2 web servers.
 
-The health check configuration uses:
+The Target Group uses:
+
+```text
+Protocol: HTTP
+Port: 80
+Target Type: Instance
+```
+
+The EC2 instances launched by the Auto Scaling Group are registered with this Target Group.
+
+A health check was configured using:
 
 ```text
 Protocol: HTTP
 Path: /
 ```
 
-The Application Load Balancer sends application traffic only to healthy registered targets.
+The `/` path represents the root page of the Apache web application.
+
+The Target Group periodically sends HTTP health-check requests to the registered EC2 instances. If an instance successfully responds to the health check, it is marked as healthy.
+
+The Application Load Balancer sends normal application traffic only to healthy registered targets.
+
+This provides an important availability mechanism because an unhealthy application instance can be removed from normal load-balanced traffic until it becomes healthy again or is replaced.
+
+![Healthy Target Group](screenshots/target-group-healthy.png)
+
+Both EC2 web servers are registered with the Target Group and reported as healthy, confirming that they are available to receive traffic from the Application Load Balancer.
+
+---
 
 ### EC2 Web Servers
 
-The EC2 instances run:
+Amazon EC2 instances are used as the compute layer for the web application.
+
+The instances run:
 
 ```text
-Amazon Linux 2023
-Apache HTTP Server
+Operating System: Amazon Linux 2023
+Instance Type: t3.micro
+Web Server: Apache HTTP Server
 ```
 
-Apache is automatically installed and started using EC2 User Data.
+Instead of manually configuring Apache after every instance is launched, EC2 User Data is included in the Launch Template.
 
-The EC2 instances are distributed across two Availability Zones.
+The User Data automatically:
+
+- Installs Apache
+- Starts the Apache service
+- Enables Apache to start automatically
+- Creates the application's `index.html` page
+- Displays the EC2 instance ID on the web page
+
+Displaying the instance ID makes it possible to observe which backend EC2 instance served a request when testing the Application Load Balancer.
+
+The application request flow is therefore:
+
+```text
+User Request
+     ↓
+Application Load Balancer
+     ↓
+Target Group
+     ↓
+EC2 Instance
+     ↓
+Apache
+     ↓
+index.html
+```
+
+The response is then returned through the load balancer to the user.
+
+The EC2 instances are distributed across separate Availability Zones and managed by the Auto Scaling Group rather than being manually created as standalone servers.
+
+The instances also use an IAM Instance Profile with AWS Systems Manager permissions, allowing administrative access through Systems Manager without relying on direct SSH access for management tasks.
+
+---
 
 ### Launch Template
 
-The Launch Template defines how new EC2 instances should be created.
+An EC2 Launch Template was created to define the standard configuration that the Auto Scaling Group uses whenever a new EC2 instance needs to be launched.
 
-It includes:
+The Launch Template includes:
 
 - Amazon Linux 2023 AMI
 - `t3.micro` instance type
 - EC2 Security Group
-- Apache installation using User Data
+- Apache installation through User Data
 - IAM Instance Profile
 - AWS Systems Manager access
 - IMDSv2 required
 
+The Launch Template ensures that newly launched instances use a consistent configuration.
+
+Instead of manually creating and configuring every replacement or scaling instance, the Auto Scaling Group can use the Launch Template automatically.
+
+The relationship is:
+
+```text
+Launch Template
+      ↓
+Defines EC2 Configuration
+      ↓
+Auto Scaling Group
+      ↓
+Launches EC2 Instances
+      ↓
+Instances Register with Target Group
+      ↓
+ALB Sends Traffic to Healthy Instances
+```
+
+This becomes particularly important during scaling and self-healing events.
+
+For example, if the Auto Scaling Group determines that another EC2 instance is required, it uses the Launch Template to launch a new instance with the same operating system, instance type, Security Group, IAM permissions, and Apache configuration.
+
+This provides consistent and repeatable EC2 provisioning without requiring manual server configuration.
+
 ---
+
+### Infrastructure Traffic Flow
+
+Combining these AWS components creates the following application traffic path:
+
+```text
+User
+ ↓
+Internet
+ ↓
+Application Load Balancer
+ ↓
+Target Group
+ ↓
+Healthy EC2 Instance
+ ↓
+Apache Web Server
+ ↓
+Application Response
+ ↓
+Application Load Balancer
+ ↓
+User
+```
+
+The VPC provides the network boundary, the two public subnets provide multi-AZ network placement, the Internet Gateway and route table provide internet routing, the Application Load Balancer handles incoming application requests, the Target Group performs health-based routing, and the EC2 instances run the Apache web application.
+
+The Launch Template and Auto Scaling Group then provide automated and consistent management of the EC2 compute layer.
 
 ## 6. High Availability & Auto Scaling
 
