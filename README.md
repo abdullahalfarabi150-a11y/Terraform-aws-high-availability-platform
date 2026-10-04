@@ -20,7 +20,7 @@ The entire infrastructure is managed as code using Terraform. Changes are stored
 
 ## 2. Architecture
 
-![AWS High Availability Architecture](screenshots/architecture.png)
+![image alt]()
 
 The architecture is designed across two Availability Zones to improve availability and fault tolerance.
 
