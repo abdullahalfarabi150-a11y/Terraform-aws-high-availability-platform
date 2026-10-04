@@ -20,7 +20,7 @@ The entire infrastructure is managed as code using Terraform. Changes are stored
 
 ## 2. Architecture
 
-![image alt]()
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/d997732503dc3a476a371ae54048e58e9cbea693/screenshots/Architecture.png)
 
 The architecture is designed across two Availability Zones to improve availability and fault tolerance.
 
