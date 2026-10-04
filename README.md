@@ -611,41 +611,6 @@ The following screenshots provide evidence of successful infrastructure deployme
 ```markdown
 ![GitHub Actions](screenshots/github-actions-success.png)
 ```
-
----
-
-## 13. Repository Structure
-
-```text
-Terraform-aws-high-availability-platform/
-│
-├── .github/
-│   └── workflows/
-│       └── terraform.yml
-│
-├── incidents/
-│   ├── INC-001.md
-│   ├── INC-002.md
-│   └── INC-003.md
-│
-├── screenshots/
-│   ├── architecture.png
-│   ├── terraform-apply.png
-│   ├── alb-working.png
-│   ├── target-group-healthy.png
-│   ├── auto-scaling-group.png
-│   ├── cloudwatch-alarm.png
-│   ├── sns-notification.png
-│   └── github-actions-success.png
-│
-├── main.tf
-├── variables.tf
-├── outputs.tf
-├── backend.tf
-├── .gitignore
-└── README.md
-```
-
 ---
 
 ## 14. Key Learnings
