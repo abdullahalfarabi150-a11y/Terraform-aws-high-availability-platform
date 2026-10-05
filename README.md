@@ -1,6 +1,6 @@
 # Terraform AWS High Availability Platform
 
-A highly available and scalable web infrastructure built on **AWS using Terraform**, with automated deployment through a **GitHub Actions CI/CD pipeline**.
+A highly available and scalable web infrastructure built on AWS using Terraform, with automated deployment through a GitHub Actions CI/CD pipeline.
 
 This project demonstrates Infrastructure as Code (IaC), AWS networking, load balancing, Auto Scaling, monitoring, alerting, secure OIDC authentication, CI/CD automation, and infrastructure troubleshooting.
 
@@ -10,11 +10,11 @@ This project demonstrates Infrastructure as Code (IaC), AWS networking, load bal
 
 This project provisions a highly available web platform on AWS using Terraform.
 
-The infrastructure is deployed across **two Availability Zones** and uses an **Application Load Balancer (ALB)** to distribute HTTP traffic between Apache web servers running on EC2 instances.
+The infrastructure is deployed across two Availability Zones and uses an Application Load Balancer (ALB) to distribute HTTP traffic between Apache web servers running on EC2 instances.
 
-The EC2 instances are managed by an **Auto Scaling Group (ASG)** to maintain availability and automatically adjust capacity based on CPU utilization. **Amazon CloudWatch** provides monitoring, while **Amazon SNS** sends email notifications for configured alarms.
+The EC2 instances are managed by an Auto Scaling Group (ASG) to maintain availability and automatically adjust capacity based on CPU utilization. Amazon CloudWatch provides monitoring, while Amazon SNS sends email notifications for configured alarms.
 
-The entire infrastructure is managed as code using Terraform. Changes are stored in GitHub and deployed through a **GitHub Actions CI/CD pipeline**, using **OIDC and AWS IAM** for secure authentication without storing long-term AWS access keys.
+The entire infrastructure is managed as code using Terraform. Changes are stored in GitHub and deployed through a GitHub Actions CI/CD pipeline, using OIDC and AWS IAM for secure authentication without storing long-term AWS access keys.
 
 ---
 
@@ -133,7 +133,7 @@ Terraform then runs plan and apply to create or update the AWS infrastructure.
 
 The AWS infrastructure was designed to provide a highly available and scalable environment for hosting the web application. The environment includes a custom VPC, two public subnets across separate Availability Zones, internet connectivity, an Application Load Balancer, a Target Group, EC2 web servers, and an Auto Scaling Launch Template.
 
-### VPC:
+### *VPC:
 
 A custom Amazon Virtual Private Cloud (VPC) was created to provide an isolated network environment for the project.
 
