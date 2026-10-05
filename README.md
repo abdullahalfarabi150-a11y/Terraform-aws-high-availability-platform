@@ -512,7 +512,7 @@ Email Notification
 
 This provides notification when the configured alarm condition occurs.
 
-![image alt]()
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/388b04e84fca28f212a7fab46ca431b914e2e710/screenshots/sns-email-subscription.png)
 
 The Amazon SNS email subscription is confirmed and connected to the CPU alert topic. When the configured CloudWatch alarm is triggered, SNS can send an email notification to the subscribed endpoint.
 
