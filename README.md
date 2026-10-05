@@ -233,7 +233,7 @@ Public Subnet 2 ──┘
 
 This combination of the Internet Gateway, public route table, and subnet associations provides the networking path required for the public-facing components of the architecture.
 
-![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/dea5279a9dc7b4a81e046777393b4409613a491e/screenshots/public-route-table.png)
+![image alt]()
 
 The public route table contains the local VPC route and the default `0.0.0.0/0` route through the Internet Gateway.
 
