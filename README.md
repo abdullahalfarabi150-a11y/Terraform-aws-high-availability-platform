@@ -819,7 +819,7 @@ The web identity token provided could not be validated.
 **Resolution:**  
 GitHub Actions successfully authenticated to AWS using OIDC, allowing the Terraform pipeline to access AWS without storing long-lived AWS access keys.
 
-📄 [View Full Incident Report]()
+[View Full Incident Report](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/cecfbb08198b0dc0103bcd45c61f6c73b796a962/INC-003/GitHub_Actions_AWS_OIDC_Incident_Report.pdf)
 
 ---
 
