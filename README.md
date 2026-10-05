@@ -592,8 +592,6 @@ terraform {
 }
 ```
 
-The existing local state was migrated to the S3 backend using:
-
 ---
 
 ## 9. CI/CD Pipeline
