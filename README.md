@@ -313,7 +313,7 @@ The Application Load Balancer sends normal application traffic only to healthy r
 
 This provides an important availability mechanism because an unhealthy application instance can be removed from normal load-balanced traffic until it becomes healthy again or is replaced.
 
-![image alt]()
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/cf453f924b1b68177cea29b0197f4ef9c6558636/screenshots/target-group-healthy.png)
 
 Both EC2 web servers are registered with the Target Group and reported as healthy, confirming that they are available to receive traffic from the Application Load Balancer.
 
