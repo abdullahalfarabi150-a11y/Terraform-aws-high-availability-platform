@@ -496,7 +496,7 @@ CloudWatch metrics are used by the Target Tracking Scaling Policy to control Aut
 
 A separate CloudWatch Alarm monitors the configured CPU threshold.
 
-![image alt]()
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/f1acf6bf3a8441fa6f085172eb59f715a036c824/screenshots/cloudwatch-cpu-alarm.png)
 
 Amazon CloudWatch monitors CPU utilization and evaluates the configured high-CPU alarm condition. The alarm is configured to trigger when CPU utilization exceeds 70% for 2 datapoints within 10 minutes.
 
