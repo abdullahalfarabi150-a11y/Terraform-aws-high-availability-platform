@@ -455,6 +455,10 @@ If an instance becomes unhealthy, the Auto Scaling Group can replace it to maint
 
 At the same time, the Application Load Balancer sends application traffic only to healthy targets.
 
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/858e55fd92ccbe1f621f29f444214773c5c20e4a/screenshots/asg-multi-az-instances.png)
+
+The Auto Scaling Group maintains healthy EC2 instances across two Availability Zones, improving application availability and reducing dependency on a single Availability Zone.
+
 ### CPU-Based Auto Scaling
 
 A Target Tracking Scaling Policy is configured using average CPU utilization.
@@ -492,6 +496,10 @@ CloudWatch metrics are used by the Target Tracking Scaling Policy to control Aut
 
 A separate CloudWatch Alarm monitors the configured CPU threshold.
 
+![image alt]()
+
+Amazon CloudWatch monitors CPU utilization and evaluates the configured high-CPU alarm condition. The alarm is configured to trigger when CPU utilization exceeds 70% for 2 datapoints within 10 minutes.
+
 When the alarm is triggered:
 
 ```text
@@ -503,6 +511,10 @@ Email Notification
 ```
 
 This provides notification when the configured alarm condition occurs.
+
+![image alt]()
+
+The Amazon SNS email subscription is confirmed and connected to the CPU alert topic. When the configured CloudWatch alarm is triggered, SNS can send an email notification to the subscribed endpoint.
 
 ---
 
@@ -555,6 +567,10 @@ Shows the infrastructure changes Terraform intends to make before applying them.
 **`terraform apply`**
 
 Creates, updates, or removes AWS resources so the actual AWS infrastructure matches the Terraform configuration.
+
+![image alt]()
+
+Terraform successfully provisioned the AWS infrastructure, with the initial deployment completing with 22 resources added and no resources changed or destroyed. This confirms that the infrastructure was created through Infrastructure as Code rather than manual AWS Console configuration.
 
 ---
 
