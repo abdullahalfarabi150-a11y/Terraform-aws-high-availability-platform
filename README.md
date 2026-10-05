@@ -133,7 +133,7 @@ Terraform then runs plan and apply to create or update the AWS infrastructure.
 
 The AWS infrastructure was designed to provide a highly available and scalable environment for hosting the web application. The environment includes a custom VPC, two public subnets across separate Availability Zones, internet connectivity, an Application Load Balancer, a Target Group, EC2 web servers, and an Auto Scaling Launch Template.
 
-### *VPC:
+### VPC:
 
 A custom Amazon Virtual Private Cloud (VPC) was created to provide an isolated network environment for the project.
 
