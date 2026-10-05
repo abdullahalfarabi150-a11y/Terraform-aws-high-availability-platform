@@ -1,4 +1,4 @@
-# Terraform AWS High Availability Platform
+# AWS Highly Available Web Infrastructure with Terraform & CI/CD
 
 A highly available and scalable web infrastructure built on AWS using Terraform, with automated deployment through a GitHub Actions CI/CD pipeline.
 
