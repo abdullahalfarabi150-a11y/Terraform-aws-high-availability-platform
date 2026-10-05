@@ -797,6 +797,8 @@ After CPU utilization returned to normal, the Auto Scaling Group later scaled in
 
 This demonstrated dynamic scaling based on application demand.
 
+[View Full Incident Report]()
+
 ### Incident 03 — GitHub Actions AWS OIDC Authentication Failure
 
 **Issue:**  
@@ -817,7 +819,7 @@ The web identity token provided could not be validated.
 **Resolution:**  
 GitHub Actions successfully authenticated to AWS using OIDC, allowing the Terraform pipeline to access AWS without storing long-lived AWS access keys.
 
-📄 [View Full Incident Report](incidents/GitHub_Actions_AWS_OIDC_Incident_Report.pdf)
+📄 [View Full Incident Report]()
 
 ---
 
