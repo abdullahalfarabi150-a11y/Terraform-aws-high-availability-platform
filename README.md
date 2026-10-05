@@ -233,13 +233,13 @@ Public Subnet 2 ──┘
 
 This combination of the Internet Gateway, public route table, and subnet associations provides the networking path required for the public-facing components of the architecture.
 
-![Public Route Table](screenshots/public-route-table.png)
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/dea5279a9dc7b4a81e046777393b4409613a491e/screenshots/public-route-table.png)
 
 The public route table contains the local VPC route and the default `0.0.0.0/0` route through the Internet Gateway.
 
 #### Subnet Associations
 
-![Subnet Route Associations](screenshots/subnet-route-associations.png)
+![image alt]()
 
 Both public subnets are explicitly associated with the same public route table, ensuring that they use the configured route to the Internet Gateway.
 
@@ -278,7 +278,7 @@ The ALB does not simply send traffic to any EC2 instance. It forwards applicatio
 
 Because the ALB spans both Availability Zones, it can distribute incoming requests across healthy application instances running in the multi-AZ environment.
 
-![Application Load Balancer](screenshots/alb-configuration.png)
+![image alt]()
 
 The Application Load Balancer is internet-facing, spans both Availability Zones, and uses an HTTP listener on port 80 to forward requests to the web Target Group.
 
@@ -313,7 +313,7 @@ The Application Load Balancer sends normal application traffic only to healthy r
 
 This provides an important availability mechanism because an unhealthy application instance can be removed from normal load-balanced traffic until it becomes healthy again or is replaced.
 
-![Healthy Target Group](screenshots/target-group-healthy.png)
+![image alt]()
 
 Both EC2 web servers are registered with the Target Group and reported as healthy, confirming that they are available to receive traffic from the Application Load Balancer.
 
