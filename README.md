@@ -639,9 +639,7 @@ terraform apply
 AWS Infrastructure
 ```
 
-![image alt]()
-
-![GitHub Actions Terraform Deployment](screenshots/github-actions-terraform-deploy.png)
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/f928e52019f7ea53fac9fa3ed37f7f88ea78408f/screenshots/github-actions-terraform-deploy.png)
 
 The GitHub Actions CI/CD pipeline successfully completed both the Terraform validation checks and the deployment workflow. After deployment approval, the pipeline authenticated securely to AWS using OIDC and an IAM role, initialized Terraform using the configured remote backend, and executed terraform apply to deploy the infrastructure changes to AWS.
 
