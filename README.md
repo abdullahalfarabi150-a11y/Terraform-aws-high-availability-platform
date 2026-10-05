@@ -154,7 +154,7 @@ The VPC acts as the main network boundary that contains the project's networking
 
 The VPC was created and managed through Terraform rather than being manually configured in the AWS Console.
 
-![VPC Resource Map](screenshots/vpc-resource-map.png)
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/62d2ef7576052d83055917a8d0610d3b93f8d135/screenshots/vpc-resource-map.png)
 
 The VPC resource map shows the custom VPC and the relationship between the two public subnets, public route table, and Internet Gateway.
 
