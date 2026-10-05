@@ -278,7 +278,7 @@ The ALB does not simply send traffic to any EC2 instance. It forwards applicatio
 
 Because the ALB spans both Availability Zones, it can distribute incoming requests across healthy application instances running in the multi-AZ environment.
 
-![image alt]()
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/fc4d88b7016c1508cf6a400a3abd50f619e1eda9/screenshots/alb-configuration.png)
 
 The Application Load Balancer is internet-facing, spans both Availability Zones, and uses an HTTP listener on port 80 to forward requests to the web Target Group.
 
