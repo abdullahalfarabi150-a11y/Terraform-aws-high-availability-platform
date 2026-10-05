@@ -795,73 +795,28 @@ After CPU utilization returned to normal, the Auto Scaling Group later scaled in
 
 This demonstrated dynamic scaling based on application demand.
 
-### INC-003 — Additional Incident
+### Incident 03 — GitHub Actions AWS OIDC Authentication Failure
 
-The final incident report can be added here.
+**Issue:**  
+GitHub Actions failed to assume the AWS IAM role using OIDC.
 
-Detailed incident reports are stored in the `incidents/` directory.
-
-```markdown
-[INC-001 — Apache Service Failure](incidents/INC-001.md)
-
-[INC-002 — CPU-Based Auto Scaling](incidents/INC-002.md)
-
-[INC-003 — Incident Name](incidents/INC-003.md)
+```text
+Could not assume role with OIDC:
+The web identity token provided could not be validated.
 ```
 
----
+**Troubleshooting:**
+- Verified the AWS IAM OIDC provider and role trust policy
+- Checked the OIDC token issuer, audience and subject claims
+- Verified the GitHub signing key and AWS OIDC thumbprint
+- Tested `AssumeRoleWithWebIdentity` directly with AWS STS
+- Confirmed the GitHub token could successfully assume the IAM role
 
-## 12. Screenshots / Evidence
+**Resolution:**  
+GitHub Actions successfully authenticated to AWS using OIDC, allowing the Terraform pipeline to access AWS without storing long-lived AWS access keys.
 
-The following screenshots provide evidence of successful infrastructure deployment, monitoring, scaling, and CI/CD automation.
+📄 [View Full Incident Report](incidents/GitHub_Actions_AWS_OIDC_Incident_Report.pdf)
 
-### Architecture
-
-```markdown
-![Architecture](screenshots/architecture.png)
-```
-
-### Terraform Deployment
-
-```markdown
-![Terraform Apply](screenshots/terraform-apply.png)
-```
-
-### Application Load Balancer
-
-```markdown
-![ALB Web Application](screenshots/alb-working.png)
-```
-
-### Healthy Target Group
-
-```markdown
-![Target Group](screenshots/target-group-healthy.png)
-```
-
-### Auto Scaling Group
-
-```markdown
-![Auto Scaling Group](screenshots/auto-scaling-group.png)
-```
-
-### CloudWatch Alarm
-
-```markdown
-![CloudWatch Alarm](screenshots/cloudwatch-alarm.png)
-```
-
-### SNS Notification
-
-```markdown
-![SNS Notification](screenshots/sns-notification.png)
-```
-
-### GitHub Actions CI/CD
-
-```markdown
-![GitHub Actions](screenshots/github-actions-success.png)
-```
 ---
 
 ## 14. Key Learnings
