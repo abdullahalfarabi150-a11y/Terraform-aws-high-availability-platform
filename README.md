@@ -202,7 +202,7 @@ VPC
 
 Attaching an Internet Gateway alone does not automatically make a subnet public. A route to the Internet Gateway must also exist in the route table associated with the subnet.
 
-For this project, the public route table contains a default route that directs internet-bound traffic to the Internet Gateway.
+For this project, the public route table contains a default route that directs internet bound traffic to the Internet Gateway.
 
 ---
 
@@ -231,7 +231,7 @@ Public Subnet 1 ──┐
 Public Subnet 2 ──┘
 ```
 
-This combination of the Internet Gateway, public route table, and subnet associations provides the networking path required for the public-facing components of the architecture.
+This combination of the Internet Gateway, public route table, and subnet associations provides the networking path required for the public facing components of the architecture.
 
 ![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/cd79ac4ae1f8bb4dc003ec3bc83ba7693a0da7d3/screenshots/public-route-table.png)
 
@@ -247,7 +247,7 @@ Both public subnets are explicitly associated with the same public route table, 
 
 ### Application Load Balancer:
 
-An internet-facing Application Load Balancer (ALB) was deployed across both public subnets.
+An internet facing Application Load Balancer (ALB) was deployed across both public subnets.
 
 The ALB acts as the public entry point for the web application.
 
@@ -276,11 +276,11 @@ When a user accesses the ALB DNS name, the request reaches the Application Load 
 
 The ALB does not simply send traffic to any EC2 instance. It forwards application traffic to instances that are registered with the Target Group and considered healthy.
 
-Because the ALB spans both Availability Zones, it can distribute incoming requests across healthy application instances running in the multi-AZ environment.
+Because the ALB spans both Availability Zones, it can distribute incoming requests across healthy application instances running in the multi AZ environment.
 
 ![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/fc4d88b7016c1508cf6a400a3abd50f619e1eda9/screenshots/alb-configuration.png)
 
-The Application Load Balancer is internet-facing, spans both Availability Zones, and uses an HTTP listener on port 80 to forward requests to the web Target Group.
+The Application Load Balancer is internet facing, spans both Availability Zones, and uses an HTTP listener on port 80 to forward requests to the web Target Group.
 
 ---
 
@@ -433,7 +433,7 @@ Application Load Balancer
 User
 ```
 
-The VPC provides the network boundary, the two public subnets provide multi-AZ network placement, the Internet Gateway and route table provide internet routing, the Application Load Balancer handles incoming application requests, the Target Group performs health-based routing, and the EC2 instances run the Apache web application.
+The VPC provides the network boundary, the two public subnets provide multi-AZ network placement, the Internet Gateway and route table provide internet routing, the Application Load Balancer handles incoming application requests, the Target Group performs health based routing, and the EC2 instances run the Apache web application.
 
 The Launch Template and Auto Scaling Group then provide automated and consistent management of the EC2 compute layer.
 
@@ -459,7 +459,7 @@ At the same time, the Application Load Balancer sends application traffic only t
 
 The Auto Scaling Group maintains healthy EC2 instances across two Availability Zones, improving application availability and reducing dependency on a single Availability Zone.
 
-### CPU-Based Auto Scaling
+### CPU Based Auto Scaling
 
 A Target Tracking Scaling Policy is configured using average CPU utilization.
 
@@ -498,7 +498,7 @@ A separate CloudWatch Alarm monitors the configured CPU threshold.
 
 ![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/f1acf6bf3a8441fa6f085172eb59f715a036c824/screenshots/cloudwatch-cpu-alarm.png)
 
-Amazon CloudWatch monitors CPU utilization and evaluates the configured high-CPU alarm condition. The alarm is configured to trigger when CPU utilization exceeds 70% for 2 datapoints within 10 minutes.
+Amazon CloudWatch monitors CPU utilization and evaluates the configured high CPU alarm condition. The alarm is configured to trigger when CPU utilization exceeds 70% for 2 datapoints within 10 minutes.
 
 When the alarm is triggered:
 
@@ -683,7 +683,7 @@ Temporary AWS Credentials
 Terraform accesses AWS
 ```
 
-This provides secure authentication between GitHub Actions and AWS without storing long-term AWS credentials in the repository.
+This provides secure authentication between GitHub Actions and AWS without storing long term AWS credentials in the repository.
 
 ---
 
@@ -743,7 +743,7 @@ AWS IAM Role
 Temporary Credentials
 ```
 
-Long-term AWS access keys are not stored in the GitHub repository.
+Long term AWS access keys are not stored in the GitHub repository.
 
 ---
 
@@ -753,7 +753,7 @@ The infrastructure was tested using controlled failure and scaling scenarios.
 
 These tests were performed to understand how the infrastructure behaves when application or infrastructure problems occur.
 
-### INC-001 — Apache Service Failure / Self-Healing
+### INC-001 — Apache Service Failure / Self Healing
 
 Apache was deliberately stopped on one EC2 instance.
 
@@ -777,7 +777,7 @@ This test demonstrated load balancer health checks and infrastructure recovery.
 
 [View Full Incident Report](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/9b2b82495ae2304fcff132b111b644df17cbd9b9/INC-001/INC-001_Report.pdf)
 
-### INC-002 — CPU-Based Auto Scaling
+### INC-002 — CPU Based Auto Scaling
 
 CPU utilization was deliberately increased on the EC2 instances.
 
@@ -825,7 +825,7 @@ GitHub Actions successfully authenticated to AWS using OIDC, allowing the Terraf
 
 ## 14. Key Learnings
 
-Through this project, I gained hands-on experience with:
+Through this project, I gained hands on experience with:
 
 - Designing AWS networking using VPCs and subnets
 - Deploying infrastructure across multiple Availability Zones
@@ -858,15 +858,15 @@ Through this project, I gained hands-on experience with:
 - Implemented an Application Load Balancer (ALB) to distribute HTTP traffic across healthy EC2 instances.
 - Configured Target Group health checks to ensure traffic is routed only to healthy application instances.
 - Used a Launch Template and Auto Scaling Group to maintain EC2 capacity and automatically replace unhealthy instances.
-- Implemented CPU-based Target Tracking Auto Scaling with a 70% utilization target for automatic scale-out and scale-in.
+- Implemented CPU based Target Tracking Auto Scaling with a 70% utilization target for automatic scale-out and scale-in.
 - Configured Amazon CloudWatch for infrastructure monitoring and CPU utilization tracking.
 - Integrated CloudWatch Alarms with Amazon SNS to provide email notifications for infrastructure events.
 - Used an Amazon S3 backend to remotely store and manage Terraform state for consistent infrastructure deployments.
 - Built a CI/CD pipeline with GitHub Actions to automatically validate, plan, and deploy Terraform infrastructure changes.
-- Implemented GitHub OIDC authentication with AWS IAM to provide secure temporary AWS credentials without storing long-term access keys.
-- Applied security controls including ALB-to-EC2 security group restrictions, IMDSv2, IAM roles, and AWS Systems Manager access.
-- Performed controlled failure and recovery testing to validate ALB health checks, Auto Scaling self-healing, and infrastructure resilience.
-- Performed CPU load testing to verify automatic scale-out and scale-in behaviour under changing workloads.
+- Implemented GitHub OIDC authentication with AWS IAM to provide secure temporary AWS credentials without storing long term access keys.
+- Applied security controls including ALB to EC2 security group restrictions, IMDSv2, IAM roles, and AWS Systems Manager access.
+- Performed controlled failure and recovery testing to validate ALB health checks, Auto Scaling self healing, and infrastructure resilience.
+- Performed CPU load testing to verify automatic scale out and scale in behaviour under changing workloads.
 - Used Git and GitHub for version control, infrastructure change tracking, CI/CD automation, and project documentation.
 
 ---
@@ -882,4 +882,4 @@ Through this project, I gained hands-on experience with:
 - Add automated security scanning to the GitHub Actions CI/CD pipeline using tools such as Checkov or Trivy.
 - Create separate development, staging, and production environments using reusable Terraform modules.
 - Implement stronger production deployment controls, such as GitHub Environment protection and manual approval before production changes.
-- Integrate Amazon Bedrock to introduce Generative AI capabilities, such as an AI-powered assistant, application support features, or intelligent infrastructure-related interactions.
+- Integrate Amazon Bedrock to introduce Generative AI capabilities, such as an AI powered assistant, application support features, or intelligent infrastructure related interactions.
