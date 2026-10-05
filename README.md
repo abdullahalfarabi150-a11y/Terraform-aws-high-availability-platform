@@ -239,7 +239,7 @@ The public route table contains the local VPC route and the default `0.0.0.0/0` 
 
 #### Subnet Associations
 
-![image alt]()
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/055735d32363a9de5c2e13865850e9292b9fd66b/screenshots/VPC-subnet-associations.png)
 
 Both public subnets are explicitly associated with the same public route table, ensuring that they use the configured route to the Internet Gateway.
 
