@@ -641,6 +641,10 @@ AWS Infrastructure
 
 ![image alt]()
 
+![GitHub Actions Terraform Deployment](screenshots/github-actions-terraform-deploy.png)
+
+The GitHub Actions CI/CD pipeline successfully completed both the Terraform validation checks and the deployment workflow. After deployment approval, the pipeline authenticated securely to AWS using OIDC and an IAM role, initialized Terraform using the configured remote backend, and executed terraform apply to deploy the infrastructure changes to AWS.
+
 ### OIDC Authentication
 
 GitHub Actions uses **OpenID Connect (OIDC)** to authenticate with AWS.
