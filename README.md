@@ -639,6 +639,8 @@ terraform apply
 AWS Infrastructure
 ```
 
+![image alt]()
+
 ### OIDC Authentication
 
 GitHub Actions uses **OpenID Connect (OIDC)** to authenticate with AWS.
