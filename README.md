@@ -133,7 +133,7 @@ Terraform then runs plan and apply to create or update the AWS infrastructure.
 
 The AWS infrastructure was designed to provide a highly available and scalable environment for hosting the web application. The environment includes a custom VPC, two public subnets across separate Availability Zones, internet connectivity, an Application Load Balancer, a Target Group, EC2 web servers, and an Auto Scaling Launch Template.
 
-### VPC
+### VPC:
 
 A custom Amazon Virtual Private Cloud (VPC) was created to provide an isolated network environment for the project.
 
@@ -160,7 +160,7 @@ The VPC resource map shows the custom VPC and the relationship between the two p
 
 ---
 
-### Public Subnets
+### Public Subnets:
 
 Two public subnets were created inside the VPC and distributed across two different Availability Zones.
 
@@ -186,7 +186,7 @@ This design helps reduce the impact of an Availability Zone failure because appl
 
 ---
 
-### Internet Gateway
+### Internet Gateway:
 
 An Internet Gateway was created and attached to the custom VPC.
 
@@ -206,7 +206,7 @@ For this project, the public route table contains a default route that directs i
 
 ---
 
-### Public Route Table
+### Public Route Table:
 
 A dedicated public route table was created to control how network traffic from the public subnets is routed.
 
@@ -237,7 +237,7 @@ This combination of the Internet Gateway, public route table, and subnet associa
 
 The public route table contains the local VPC route and the default `0.0.0.0/0` route through the Internet Gateway.
 
-#### Subnet Associations
+#### Subnet Associations:
 
 ![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/055735d32363a9de5c2e13865850e9292b9fd66b/screenshots/VPC-subnet-associations.png)
 
@@ -245,7 +245,7 @@ Both public subnets are explicitly associated with the same public route table, 
 
 ---
 
-### Application Load Balancer
+### Application Load Balancer:
 
 An internet-facing Application Load Balancer (ALB) was deployed across both public subnets.
 
@@ -284,7 +284,7 @@ The Application Load Balancer is internet-facing, spans both Availability Zones,
 
 ---
 
-### Target Group
+### Target Group:
 
 A Target Group was created to connect the Application Load Balancer with the EC2 web servers.
 
@@ -319,7 +319,7 @@ Both EC2 web servers are registered with the Target Group and reported as health
 
 ---
 
-### EC2 Web Servers
+### EC2 Web Servers:
 
 Amazon EC2 instances are used as the compute layer for the web application.
 
@@ -367,7 +367,7 @@ The instances also use an IAM Instance Profile with AWS Systems Manager permissi
 
 ---
 
-### Launch Template
+### Launch Template:
 
 An EC2 Launch Template was created to define the standard configuration that the Auto Scaling Group uses whenever a new EC2 instance needs to be launched.
 
@@ -409,7 +409,7 @@ This provides consistent and repeatable EC2 provisioning without requiring manua
 
 ---
 
-### Infrastructure Traffic Flow
+### Infrastructure Traffic Flow:
 
 Combining these AWS components creates the following application traffic path:
 
