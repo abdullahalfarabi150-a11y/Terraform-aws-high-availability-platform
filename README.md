@@ -574,6 +574,28 @@ Terraform successfully provisioned the AWS infrastructure, with the initial depl
 
 ---
 
+## Remote Terraform State with Amazon S3
+
+Terraform state is stored remotely in an Amazon S3 bucket instead of relying only on a local `terraform.tfstate` file.
+
+The S3 backend is configured in `backend.tf`:
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket       = "farabi-project2-terraform-state-641332413499"
+    key          = "project2/terraform.tfstate"
+    region       = "ap-southeast-2"
+    encrypt      = true
+    use_lockfile = true
+  }
+}
+```
+
+The existing local state was migrated to the S3 backend using:
+
+---
+
 ## 9. CI/CD Pipeline
 
 The project uses **GitHub Actions** to automate Terraform validation and infrastructure deployment.
