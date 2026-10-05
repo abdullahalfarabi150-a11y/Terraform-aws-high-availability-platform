@@ -775,6 +775,8 @@ Healthy Capacity Restored
 
 This test demonstrated load balancer health checks and infrastructure recovery.
 
+[View Full Incident Report](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/9b2b82495ae2304fcff132b111b644df17cbd9b9/INC-001/INC-001_Report.pdf)
+
 ### INC-002 — CPU-Based Auto Scaling
 
 CPU utilization was deliberately increased on the EC2 instances.
