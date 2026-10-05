@@ -568,7 +568,7 @@ Shows the infrastructure changes Terraform intends to make before applying them.
 
 Creates, updates, or removes AWS resources so the actual AWS infrastructure matches the Terraform configuration.
 
-![image alt]()
+![image alt](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/336c6323500785d4e8d389b47ee737257e6189de/screenshots/terraform-apply-success.png)
 
 Terraform successfully provisioned the AWS infrastructure, with the initial deployment completing with 22 resources added and no resources changed or destroyed. This confirms that the infrastructure was created through Infrastructure as Code rather than manual AWS Console configuration.
 
