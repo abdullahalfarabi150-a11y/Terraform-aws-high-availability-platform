@@ -797,7 +797,7 @@ After CPU utilization returned to normal, the Auto Scaling Group later scaled in
 
 This demonstrated dynamic scaling based on application demand.
 
-[View Full Incident Report](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/b2d1c60f54241f2e80da8d81618fa7ba36dfb1b9/INC-002/INC-002_Report.pdf)
+[View Full Incident Report](https://github.com/abdullahalfarabi150-a11y/Terraform-aws-high-availability-platform/blob/51169bb95ccfdef170bccdca06e0c1ed7c1f8e04/INC-002/INC-002_Report.pdf)
 
 ### Incident 03 — GitHub Actions AWS OIDC Authentication Failure
 
