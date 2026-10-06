@@ -137,9 +137,7 @@ The infrastructure of AWS was built to create a highly available and scalable en
 
 A custom Amazon Virtual Private Cloud (VPC) was created to provide an isolated network environment for the project.
 
-```text
 VPC CIDR: 10.0.0.0/16
-```
 
 The `10.0.0.0/16` CIDR block defines the private IP address range available within the VPC. Smaller subnet networks were created from this address space to organize the infrastructure across multiple Availability Zones.
 
