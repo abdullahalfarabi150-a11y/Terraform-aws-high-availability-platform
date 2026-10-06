@@ -139,9 +139,9 @@ A custom Amazon Virtual Private Cloud (VPC) was created to provide an isolated n
 
 VPC CIDR: 10.0.0.0/16
 
-The `10.0.0.0/16` CIDR block defines the private IP address range available within the VPC. Smaller subnet networks were created from this address space to organize the infrastructure across multiple Availability Zones.
+The 10.0.0.0/16 CIDR block defines the private IP address range available within the VPC. Smaller subnet networks were created from this address space to organize the infrastructure across multiple Availability Zones.
 
-The VPC acts as the main network boundary that contains the project's networking and compute resources, including:
+The VPC serves as the primary network boundary for the project's networking and compute resources, such as:
 
 - Public Subnets
 - Route Table
@@ -172,11 +172,11 @@ CIDR: 10.0.2.0/24
 Availability Zone: ap-southeast-2b
 ```
 
-Both subnet CIDR ranges are smaller networks taken from the main `10.0.0.0/16` VPC address space.
+Both subnet CIDR ranges are smaller networks taken from the main 10.0.0.0/16 VPC address space.
 
-The two subnets were intentionally placed in separate Availability Zones to support high availability. This allows the infrastructure to run EC2 instances across different AWS data-center locations instead of depending on a single Availability Zone.
+The two subnets were intentionally placed in separate Availability Zones to support high availability. This allows the infrastructure to run EC2 instances across different AWS data center locations instead of depending on a single Availability Zone.
 
-The Application Load Balancer also spans both public subnets, allowing it to receive traffic across the multi-AZ environment.
+The Application Load Balancer also hosts both the subnets and is capable of receiving traffic from the multiple Availability Zones.
 
 The Auto Scaling Group uses both subnets when launching EC2 instances, allowing instances to be distributed across the two Availability Zones.
 
@@ -217,9 +217,9 @@ Destination        Target
 0.0.0.0/0     →    Internet Gateway
 ```
 
-The `10.0.0.0/16 → local` route is automatically used for communication between resources inside the VPC.
+The **10.0.0.0/16** → local route is automatically used for communication between resources inside the VPC.
 
-The `0.0.0.0/0 → Internet Gateway` route means that traffic destined for addresses outside the VPC can be routed through the Internet Gateway.
+The **0.0.0.0/0** → Internet Gateway` route means that traffic destined for addresses outside the VPC can be routed through the Internet Gateway.
 
 Both public subnets were explicitly associated with this public route table:
 
@@ -270,7 +270,7 @@ Target Group
 Healthy EC2 Instance
 ```
 
-When a user accesses the ALB DNS name, the request reaches the Application Load Balancer. The ALB listener on port `80` evaluates the request and forwards it to the configured Target Group.
+When a user accesses the ALB DNS name, the request reaches the Application Load Balancer. The ALB listener on port 80 evaluates the request and forwards it to the configured Target Group.
 
 The ALB does not simply send traffic to any EC2 instance. It forwards application traffic to instances that are registered with the Target Group and considered healthy.
 
@@ -336,7 +336,7 @@ The User Data automatically:
 - Installs Apache
 - Starts the Apache service
 - Enables Apache to start automatically
-- Creates the application's `index.html` page
+- Creates the application's index.html page
 - Displays the EC2 instance ID on the web page
 
 Displaying the instance ID makes it possible to observe which backend EC2 instance served a request when testing the Application Load Balancer.
@@ -372,7 +372,7 @@ An EC2 Launch Template was created to define the standard configuration that the
 The Launch Template includes:
 
 - Amazon Linux 2023 AMI
-- `t3.micro` instance type
+- t3.micro instance type
 - EC2 Security Group
 - Apache installation through User Data
 - IAM Instance Profile
@@ -401,7 +401,7 @@ ALB Sends Traffic to Healthy Instances
 
 This becomes particularly important during scaling and self-healing events.
 
-For example, if the Auto Scaling Group determines that another EC2 instance is required, it uses the Launch Template to launch a new instance with the same operating system, instance type, Security Group, IAM permissions, and Apache configuration.
+For example, if the Auto Scaling Group determines that another EC2 instance is required, it uses the Launch Template to launch a new instance with the same operating system, instance type, Security Group, IAM permissions and Apache configuration.
 
 This provides consistent and repeatable EC2 provisioning without requiring manual server configuration.
 
@@ -431,13 +431,13 @@ Application Load Balancer
 User
 ```
 
-The VPC provides the network boundary, the two public subnets provide multi-AZ network placement, the Internet Gateway and route table provide internet routing, the Application Load Balancer handles incoming application requests, the Target Group performs health based routing, and the EC2 instances run the Apache web application.
+The VPC provides the network boundary, the two public subnets provide multi-AZ network placement, the Internet Gateway and route table provide internet routing, the Application Load Balancer handles incoming application requests, the Target Group performs health based routing and the EC2 instances run the Apache web application.
 
 The Launch Template and Auto Scaling Group then provide automated and consistent management of the EC2 compute layer.
 
 ## 6. High Availability & Auto Scaling
 
-The EC2 instances are managed by an **Auto Scaling Group**.
+The EC2 instances are managed by an Auto Scaling Group.
 
 The configured capacity is:
 
@@ -574,9 +574,9 @@ Terraform successfully provisioned the AWS infrastructure, with the initial depl
 
 ## Remote Terraform State with Amazon S3
 
-Terraform state is stored remotely in an Amazon S3 bucket instead of relying only on a local `terraform.tfstate` file.
+Terraform state is stored remotely in an Amazon S3 bucket instead of relying only on a local terraform.tfstate file.
 
-The S3 backend is configured in `backend.tf`:
+The S3 backend is configured in backend.tf:
 
 ```hcl
 terraform {
@@ -594,7 +594,7 @@ terraform {
 
 ## 9. CI/CD Pipeline
 
-The project uses **GitHub Actions** to automate Terraform validation and infrastructure deployment.
+The project uses GitHub Actions to automate Terraform validation and infrastructure deployment.
 
 ### CI/CD Flow
 
@@ -663,7 +663,7 @@ The GitHub Actions CI/CD pipeline successfully completed both the Terraform vali
 
 ### OIDC Authentication
 
-GitHub Actions uses **OpenID Connect (OIDC)** to authenticate with AWS.
+GitHub Actions uses OpenID Connect (OIDC) to authenticate with AWS.
 
 Instead of storing permanent AWS access keys in GitHub:
 
@@ -704,7 +704,7 @@ Source: 0.0.0.0/0
 
 The EC2 instances do not accept normal HTTP traffic directly from the internet.
 
-HTTP traffic is allowed from the **ALB Security Group**:
+HTTP traffic is allowed from the ALB Security Group:
 
 ```text
 Inbound:
@@ -727,7 +727,7 @@ This allows the instances to be managed through AWS Systems Manager.
 
 ### IMDSv2
 
-The Launch Template requires **Instance Metadata Service Version 2 (IMDSv2)**.
+The Launch Template requires Instance Metadata Service Version 2 (IMDSv2).
 
 ### GitHub Actions Security
 
@@ -811,7 +811,7 @@ The web identity token provided could not be validated.
 - Verified the AWS IAM OIDC provider and role trust policy
 - Checked the OIDC token issuer, audience and subject claims
 - Verified the GitHub signing key and AWS OIDC thumbprint
-- Tested `AssumeRoleWithWebIdentity` directly with AWS STS
+- Tested **AssumeRoleWithWebIdentity** directly with AWS STS
 - Confirmed the GitHub token could successfully assume the IAM role
 
 **Resolution:**  
@@ -851,17 +851,17 @@ Through this project, I gained hands on experience with:
 
 ## Project Summary
 
-- Built a highly available AWS web infrastructure using Terraform Infrastructure as Code (IaC).
-- Designed a custom VPC with two public subnets across two Availability Zones for high availability.
-- Implemented an Application Load Balancer (ALB) to distribute HTTP traffic across healthy EC2 instances.
-- Configured Target Group health checks to ensure traffic is routed only to healthy application instances.
-- Used a Launch Template and Auto Scaling Group to maintain EC2 capacity and automatically replace unhealthy instances.
-- Implemented CPU based Target Tracking Auto Scaling with a 70% utilization target for automatic scale-out and scale-in.
-- Configured Amazon CloudWatch for infrastructure monitoring and CPU utilization tracking.
-- Integrated CloudWatch Alarms with Amazon SNS to provide email notifications for infrastructure events.
-- Used an Amazon S3 backend to remotely store and manage Terraform state for consistent infrastructure deployments.
-- Built a CI/CD pipeline with GitHub Actions to automatically validate, plan, and deploy Terraform infrastructure changes.
-- Implemented GitHub OIDC authentication with AWS IAM to provide secure temporary AWS credentials without storing long term access keys.
+- Developed a highly available AWS web infrastructure using Terraform IaC.
+- Created a custom VPC that consists of two public subnets in two Availability Zones for high availability.
+- Created an ALB that distributes HTTP traffic to healthy EC2 instances.
+- Defined Target Group health checks to route HTTP traffic to healthy instances.
+- Used the combination of a Launch Template and Auto Scaling Group to ensure EC2 capacity and replacement of unhealthy EC2 instances.
+- Configured CPU based Target Tracking Auto Scaling with the target CPU usage of 70%.
+- Set up the Amazon CloudWatch service to monitor the infrastructure and track CPU utilization.
+- Configured CloudWatch Alarms that notify via Amazon SNS for any infrastructure events.
+- Stored and managed Terraform state in an Amazon S3 backend for consistent infrastructure deployments.
+- Created a CI/CD pipeline with GitHub Actions to validate, plan, and deploy infrastructure changes.
+- Created GitHub OIDC authentication with AWS IAM to get AWS temporary credentials securely without AWS access keys.
 - Applied security controls including ALB to EC2 security group restrictions, IMDSv2, IAM roles, and AWS Systems Manager access.
 - Performed controlled failure and recovery testing to validate ALB health checks, Auto Scaling self healing, and infrastructure resilience.
 - Performed CPU load testing to verify automatic scale out and scale in behaviour under changing workloads.
@@ -871,13 +871,12 @@ Through this project, I gained hands on experience with:
 
 ## Future Improvements
 
-- Move EC2 instances to private subnets to improve application security and reduce direct internet exposure.
-- Add a NAT Gateway to provide controlled outbound internet access for EC2 instances in private subnets.
-- Configure HTTPS using AWS Certificate Manager (ACM) and an ALB HTTPS listener on port 443.
-- Integrate Amazon Route 53 for custom domain and DNS management.
-- Add AWS WAF to protect the web application from common web attacks and malicious traffic.
-- Improve monitoring by creating CloudWatch dashboards, additional alarms, and centralized application logs.
-- Add automated security scanning to the GitHub Actions CI/CD pipeline using tools such as Checkov or Trivy.
-- Create separate development, staging, and production environments using reusable Terraform modules.
-- Implement stronger production deployment controls, such as GitHub Environment protection and manual approval before production changes.
-- Integrate Amazon Bedrock to introduce Generative AI capabilities, such as an AI powered assistant, application support features, or intelligent infrastructure related interactions.
+- Move EC2 instances to private subnets to secure applications and limit direct exposure to the internet.
+- Implement a NAT Gateway to enable controlled internet access for EC2 instances in private subnets.
+- Implement HTTPS through AWS Certificate Manager (ACM) and ALB HTTPS Listener on port 443.
+- Implement Amazon Route 53 for DNS management and custom domain name handling.
+- Implement AWS WAF for securing a web application from web attacks and malicious traffic.
+- Improve monitoring by implementing CloudWatch dashboards, extra alarms, and centralized application logging.
+- Implement development, staging, and production environments using Terraform modules.
+- Implement more production deployment controls like GitHub Environment protections and approvals for any changes made in production.
+- Implement Amazon Bedrock to implement Generative AI functionality like an AI-powered assistant, application features, or infrastructure-related interactions.
