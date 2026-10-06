@@ -1,20 +1,20 @@
 # AWS Highly Available Web Infrastructure with Terraform & CI/CD
 
-A highly available and scalable web infrastructure built on AWS using Terraform, with automated deployment through a GitHub Actions CI/CD pipeline.
+Highly available and scalable web architecture on AWS using Terraform, with deployment automation through GitHub Actions CI/CD pipeline.
 
-This project demonstrates Infrastructure as Code (IaC), AWS networking, load balancing, Auto Scaling, monitoring, alerting, secure OIDC authentication, CI/CD automation, and infrastructure troubleshooting.
+This project showcases Infrastructure as Code (IaC), AWS networking, load balancing, Auto Scaling, monitoring, alerts, OIDC authentication, CI/CD automation and infrastructure debugging.
 
 ---
 
 ## 1. Project Overview
 
-This project provisions a highly available web platform on AWS using Terraform.
+In this project, a highly available web platform is implemented using Terraform in AWS.
 
-The infrastructure is deployed across two Availability Zones and uses an Application Load Balancer (ALB) to distribute HTTP traffic between Apache web servers running on EC2 instances.
+The infrastructure is hosted in two Availability Zones, with an Application Load Balancer (ALB) routing the HTTP requests to the Apache web servers that are hosted on EC2 instances.
 
-The EC2 instances are managed by an Auto Scaling Group (ASG) to maintain availability and automatically adjust capacity based on CPU utilization. Amazon CloudWatch provides monitoring, while Amazon SNS sends email notifications for configured alarms.
+The EC2 instances are controlled by an Auto Scaling Group (ASG) to provide availability and scaling capabilities depending on the CPU usage. Monitoring is performed using Amazon CloudWatch, and email notifications are sent using Amazon SNS in case of any alarms.
 
-The entire infrastructure is managed as code using Terraform. Changes are stored in GitHub and deployed through a GitHub Actions CI/CD pipeline, using OIDC and AWS IAM for secure authentication without storing long-term AWS access keys.
+All the infrastructure is managed using Terraform. The changes are stored in GitHub and are deployed using a CI/CD pipeline in GitHub Actions, with OIDC and AWS IAM authentication being used for secure deployment without long-term AWS credentials.
 
 ---
 
