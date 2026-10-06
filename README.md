@@ -48,7 +48,7 @@ Healthy EC2 Instance
 Apache Web Server
 ```
 
-The **Application Load Balancer** receives HTTP traffic on port 80 and forwards the request through the **Target Group** to a healthy EC2 instance.
+The Application Load Balancer receives HTTP traffic on port 80 and forwards the request through the **Target Group** to a healthy EC2 instance.
 
 Apache running on the EC2 instance processes the request and serves the web page.
 
@@ -96,7 +96,7 @@ AWS Infrastructure
 
 Terraform defines the desired AWS infrastructure.
 
-After changes are pushed to GitHub, **GitHub Actions** runs the CI/CD workflow. GitHub Actions uses **OIDC** to authenticate with AWS and assume an IAM role.
+After changes are pushed to GitHub, GitHub Actions runs the CI/CD workflow. GitHub Actions uses OIDC to authenticate with AWS and assume an IAM role.
 
 Terraform then runs plan and apply to create or update the AWS infrastructure.
 
@@ -131,7 +131,7 @@ Terraform then runs plan and apply to create or update the AWS infrastructure.
 
 ## 5. AWS Infrastructure
 
-The AWS infrastructure was designed to provide a highly available and scalable environment for hosting the web application. The environment includes a custom VPC, two public subnets across separate Availability Zones, internet connectivity, an Application Load Balancer, a Target Group, EC2 web servers, and an Auto Scaling Launch Template.
+The infrastructure of AWS was built to create a highly available and scalable environment to host the web application. It includes a customized VPC, two public subnets in different Availability Zones, internet connection, an Application Load Balancer, a Target Group, EC2 web servers and an Auto Scaling Launch Template.
 
 ### VPC:
 
