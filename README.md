@@ -1,4 +1,4 @@
-# AWS Highly Available Web Infrastructure with Terraform & CI/CD
+# AWS Scalable Web Infrastructure with Terraform & CI/CD
 
 Highly available and scalable web architecture on AWS using Terraform, with deployment automation through GitHub Actions CI/CD pipeline.
 
