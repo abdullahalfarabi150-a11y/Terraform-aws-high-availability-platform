@@ -14,7 +14,7 @@ The infrastructure is hosted in two Availability Zones, with an Application Load
 
 The EC2 instances are controlled by an Auto Scaling Group (ASG) to provide availability and scaling capabilities depending on the CPU usage. Monitoring is performed using Amazon CloudWatch, and email notifications are sent using Amazon SNS in case of any alarms.
 
-All the infrastructure is managed using Terraform. The changes are stored in GitHub and are deployed using a CI/CD pipeline in GitHub Actions, with OIDC and AWS IAM authentication being used for secure deployment without long-term AWS credentials.
+All the infrastructure is managed using Terraform. The changes are stored in GitHub and are deployed using a CI/CD pipeline in GitHub Actions, with OIDC and AWS IAM authentication being used for secure deployment without long term AWS credentials.
 
 ---
 
